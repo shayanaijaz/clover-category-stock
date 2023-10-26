@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { pool } from '@/utils/databaseHelper';
-import { decryptToken } from '@/utils/encryptionHelper';
+import { pool } from '@/app/api/_databaseHelper';
+import { decryptToken } from '@/app/api/_encryptionHelper';
 
 
 const cloverUrl: string = `${process.env.CLOVER_URL}/v3/merchants`;

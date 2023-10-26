@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import { pool } from '@/utils/databaseHelper';
-import { decryptToken } from '@/utils/encryptionHelper';
+import { pool } from '@/app/api/_databaseHelper';
+import { decryptToken } from '@/app/api/_encryptionHelper';
 import { Order } from '@/types/order';
 import { Category, CategoryStock } from '@/types/category';
 

@@ -1,8 +1,8 @@
 import fetch from 'node-fetch';
 import { NextResponse } from 'next/server';
-import { pool } from '@/utils/databaseHelper';
+import { pool } from '@/app/api/_databaseHelper';
 import { QueryResult } from 'pg';
-import { encryptToken } from '@/utils/encryptionHelper';
+import { encryptToken } from '@/app/api/_encryptionHelper';
 
 const tokenUrl: string = `${process.env.CLOVER_URL}/oauth/token`
 

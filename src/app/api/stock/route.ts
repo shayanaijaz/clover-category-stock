@@ -3,8 +3,6 @@ import { pool } from '@/utils/databaseHelper';
 import { decryptToken } from '@/utils/encryptionHelper';
 import { Order } from '@/types/order';
 import { Category, CategoryStock } from '@/types/category';
-import { QueryResult } from '@vercel/postgres';
-import cli from '@angular/cli';
 
 const cloverUrl = `${process.env.CLOVER_URL}/v3/merchants`
 

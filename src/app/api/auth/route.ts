@@ -1,10 +1,7 @@
-import { NextApiRequest, NextApiResponse } from 'next';
 import fetch from 'node-fetch';
 import { NextResponse } from 'next/server';
-import * as crypto from 'crypto'
 import { pool } from '@/utils/databaseHelper';
 import { QueryResult } from 'pg';
-import cli from '@angular/cli';
 import { encryptToken } from '@/utils/encryptionHelper';
 
 const tokenUrl: string = `${process.env.CLOVER_URL}/oauth/token`
@@ -12,7 +9,7 @@ const tokenUrl: string = `${process.env.CLOVER_URL}/oauth/token`
 const clientID = process.env.CLOVER_CLIENT_ID;
 const clientSecret = process.env.CLOVER_CLIENT_SECRET;
 
-export async function GET(request: NextApiRequest,response: NextApiResponse) {
+export async function GET(request: Request) {
 
   const { searchParams } = new URL(request.url);
 

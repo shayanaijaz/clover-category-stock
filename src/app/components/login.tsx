@@ -4,8 +4,6 @@ import { useState, useEffect} from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { useCookies } from 'next-client-cookies'
 
-const baseUrl = 'http://localhost:3000'
-
 const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
 
 export default function LoginComponent() {
@@ -21,7 +19,7 @@ export default function LoginComponent() {
 
     useEffect(() => {
         async function fetchData() {
-            const res = await fetch(`${baseUrl}/api/auth?merchant_id=${merchantId}&code=${code}`)
+            const res = await fetch(`/api/auth?merchant_id=${merchantId}&code=${code}`)
             const data = await res.json();
 
             cookies.set('access_token', data.access_token);

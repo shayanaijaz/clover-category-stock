@@ -3,7 +3,7 @@ import { pool } from '@/utils/databaseHelper';
 import { decryptToken } from '@/utils/encryptionHelper';
 
 
-const baseUrl: string = 'https://sandbox.dev.clover.com/v3/merchants';
+const cloverUrl: string = `${process.env.CLOVER_URL}/v3/merchants`;
 
 export async function GET(request: NextRequest) {
 
@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
 
 
     try {
-        const response = await fetch(`${baseUrl}/${merchantId}/categories`,
+        const response = await fetch(`${cloverUrl}/${merchantId}/categories`,
         {
             headers: {
             'Authorization': `Bearer ${accessToken}`

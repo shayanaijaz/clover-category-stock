@@ -6,8 +6,7 @@ import { Category, CategoryStock } from '@/types/category';
 import { QueryResult } from '@vercel/postgres';
 import cli from '@angular/cli';
 
-
-const baseUrl = 'https://sandbox.dev.clover.com/v3/merchants'
+const cloverUrl = `${process.env.CLOVER_URL}/v3/merchants`
 
 export async function GET(request: Request) {
 
@@ -16,17 +15,13 @@ export async function GET(request: Request) {
     const authorizationHeaderToken = request.headers.get('authorization').split(' ')[1]
     const accessToken = decryptToken(authorizationHeaderToken)
 
-    // const todayStartDate = new Date()
-    // todayStartDate.setHours(8);
-    // todayStartDate.setMinutes(30);
-
     // get all the categories for this merchant
 
     try {
 
         // first process all the default data before processing any new data
 
-        const categoriesResponse = await fetch(`${baseUrl}/${merchantId}/categories`,
+        const categoriesResponse = await fetch(`${cloverUrl}/${merchantId}/categories`,
         {
             headers: {
             'Authorization': `Bearer ${accessToken}`
@@ -61,7 +56,7 @@ export async function GET(request: Request) {
         const todayEndDateTimestamp = todayEndDate.getTime();
 
         // Now we can get the orders to see if any of the categories need to be updated 
-        const response = await fetch(`${baseUrl}/${merchantId}/orders?filter=createdTime>${todayStartDateTimestamp}&filter=createdTime<=${todayEndDateTimestamp}&expand=lineItems`,
+        const response = await fetch(`${cloverUrl}/${merchantId}/orders?filter=createdTime>${todayStartDateTimestamp}&filter=createdTime<=${todayEndDateTimestamp}&expand=lineItems`,
         {
             headers: {
             'Authorization': `Bearer ${accessToken}`
@@ -81,6 +76,7 @@ export async function GET(request: Request) {
         
         return NextResponse.json(categoryStocks, { status: 200 })
     } catch (error) {
+        console.error(error)
         return NextResponse.json("An error has occurred", { status: 500 });
     }  
 }
@@ -216,7 +212,7 @@ async function processOrders(orders: Order[], categoryStocks: CategoryStock[], m
 
 async function getItemCategory(itemId: string, merchantId: string, accessToken: string) {
     try {
-        const response = await fetch(`${baseUrl}/${merchantId}/items/${itemId}/categories`,
+        const response = await fetch(`${cloverUrl}/${merchantId}/items/${itemId}/categories`,
         {
             headers: {
             'Authorization': `Bearer ${accessToken}`

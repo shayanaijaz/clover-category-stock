@@ -7,7 +7,7 @@ import { QueryResult } from 'pg';
 import cli from '@angular/cli';
 import { encryptToken } from '@/utils/encryptionHelper';
 
-const tokenUrl: string = 'https://sandbox.dev.clover.com/oauth/token'
+const tokenUrl: string = `${process.env.CLOVER_URL}/oauth/token`
 
 const clientID = process.env.CLOVER_CLIENT_ID;
 const clientSecret = process.env.CLOVER_CLIENT_SECRET;

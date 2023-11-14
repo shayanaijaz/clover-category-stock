@@ -13,6 +13,7 @@ export default function LoginComponent() {
     const router = useRouter();
 
     const [isLoading, setIsLoading] = useState(true);
+    const [isError, setIsError] = useState(false);
 
     const merchantId = searchParams.get('merchant_id');
     const code = searchParams.get('code');
@@ -32,8 +33,17 @@ export default function LoginComponent() {
             router.push('/dashboard');
         }
 
-        if (merchantId && code) {
+        async function setErrorState() {
+            setIsLoading(false);
+            setIsError(true);
+            await delay(2000);
+            router.push('https://sandbox.dev.clover.com/dashboard')
+        }
+
+        if (merchantId !== 'null' && code !== 'null') {
             fetchData();
+        } else {
+            setErrorState();
         }
     }, []);
 
@@ -42,7 +52,10 @@ export default function LoginComponent() {
             <div className='h-screen flex items-center justify-center'>
                 {isLoading ? (
                     <h1 className='text-3xl font-bold'>Authorizing...</h1>
-                ) : <h1 className='text-3xl font-bold text-green-500'>Authorized! Now Redirecting...</h1> }
+                ) : 
+                isError ? 
+                <h1 className='text-3xl font-bold text-red-500'>An error has occurred. Please launch Category Inventory application from Clover dashboard. Redirecting you now...</h1> :
+                <h1 className='text-3xl font-bold text-green-500'>Authorized! Now Redirecting...</h1> }
             </div>
         </>
     )
